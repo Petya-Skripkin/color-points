@@ -62,6 +62,22 @@ prototype.positionSpeed = function (speed) {
     function mouseMove(event) {
       item.style.left = event.x + -25 + 'px';
       item.style.top = event.y + -25 + 'px';
+      switch (item.className) {
+        case 'red':
+          colors.red = roundNumber(item.style.top) / 1.5;
+          break;
+
+        case 'green':
+          colors.green = roundNumber(item.style.top) / 1.5;
+          break;
+
+        case 'blue':
+          colors.blue = roundNumber(item.style.top) / 1.5;
+          break;
+
+        default:
+          break;
+      }
     }
 
     let going = setTimeout(move.bind(this), speed * 1000);
