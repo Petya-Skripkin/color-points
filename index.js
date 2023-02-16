@@ -22,7 +22,7 @@ prototype.positionSpeed = function (speed) {
 
   this.forEach(item => {
     let [x, y] = this.moveSpeed;
-    [x, y] = [x + Math.round(Math.random() * 5), y + Math.round(Math.random() * 5)];
+    [x, y] = [x + Math.round(Math.random() * 2), y + Math.round(Math.random() * 2)];
     function move() {
       if (roundNumber(item.style.left) + 55 > roundNumber(window.innerWidth)) {
         x = -x;
@@ -42,15 +42,15 @@ prototype.positionSpeed = function (speed) {
 
       switch (item.className) {
         case 'red':
-          colors.red = roundNumber(item.style.top) / 2;
+          colors.red = roundNumber(item.style.top) / 1.5;
           break;
         
         case 'green':
-          colors.green = roundNumber(item.style.top) / 2;
+          colors.green = roundNumber(item.style.top) / 1.5;
           break;
         
         case 'blue':
-          colors.blue = roundNumber(item.style.top) / 2;
+          colors.blue = roundNumber(item.style.top) / 1.5;
           break;
       
         default:
@@ -58,8 +58,29 @@ prototype.positionSpeed = function (speed) {
       }
       section.style.backgroundColor = `rgb(${colors.red},${colors.green},${colors.blue})`;
     }
-    
+
+    function mouseMove(event) {
+      item.style.left = event.x + -25 + 'px';
+      item.style.top = event.y + -25 + 'px';
+    }
+
     let going = setTimeout(move.bind(this), speed * 1000);
+
+    item.addEventListener('mouseover', () => {
+      clearTimeout(going);
+    })
+
+    item.addEventListener('mouseout', () => {
+      going = setTimeout(move.bind(this), speed * 1000);
+    })
+
+    item.addEventListener('mousedown', () => {
+      window.addEventListener('mousemove', mouseMove);
+    })
+
+    item.addEventListener('mouseup', () => {
+      window.removeEventListener('mousemove', mouseMove);
+    })
   });
 
 }
